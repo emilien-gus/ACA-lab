@@ -1,0 +1,13 @@
+# src/CMakeLists.txt
+
+# Указываем, что мы собираем библиотеку
+add_library(my_lib STATIC sorts.cpp AVL_tree.cpp)
+
+# Указываем, что библиотека использует заголовочные файлы из папки include
+target_include_directories(my_lib PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+
+# Создаем исполняемый файл из main.cpp
+add_executable(prog1 main.cpp)
+
+# Связываем исполняемый файл с библиотекой
+target_link_libraries(prog1 PRIVATE my_liby)
