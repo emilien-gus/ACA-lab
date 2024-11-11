@@ -84,8 +84,39 @@ void RRturn(Node* root, bool operation){
     root = buf;
 }
 
-void RLturn(Node* root, bool operatio){
+void RLturn(Node* root, bool operation){
+    Node* buf1;
+    Node* buf2;
+    int tempBal2;
     
+    buf1 = root->r;
+    buf2 = buf1->l;
+    tempBal2 = buf2->bal;
+    buf1->l = buf2->r;
+    buf2->r = buf1;
+    root->r = buf2->l;
+    buf2->l = root;
+
+    if (tempBal2 == 1){
+        root->bal = -1;
+    }
+    else{
+        root->bal = 0;
+    }
+    if (tempBal2 == -1){
+        buf1->bal = 1;
+    }else{
+        buf1->bal = 0;
+    }
+    
+    root = buf2;
+
+    if(operation){
+        root->bal = 0;
+    }
+    else{
+        buf2->bal = 0;
+    }
 }
 
 #endif AVL_TREE_H
