@@ -119,4 +119,116 @@ void RLturn(Node* root, bool operation){
     }
 }
 
+void insertHelp(int val, Node* root, bool h){
+    if (root == NULL){
+        root = new Node;
+        h = true;
+        root->key = val;
+        root->bal = 0;
+        root->l = NULL;
+        root->r = NULL;
+    }
+    else if (val < root->key){
+        insertHelp(x, root->l, h);
+        if (h){
+            switch (root->bal){
+                case 1:
+                    root->bal = 0;
+                    h = false;
+                    break
+                case 0:
+                    root->bal = -1;
+                    break;
+                case:
+                    if (root->l->bal == -1){
+                        LLturn(root, true)
+                    }else{
+                        LRturn(root, true);
+                    }
+                    h = false;
+                    break;
+            }
+        }
+    }
+    else{
+        insertHelp(val, root->r, h);
+        if (h){
+            switch (root->bal){
+                case -1:
+                    root->bal = 0;
+                    h = false;
+                    break;
+                case 0:
+                    root->bal = 1;
+                    break;
+                case 1:
+                    if (root->l->bal == -1){
+                        RRturn(root, true);
+                    }else{
+                        RLturn(root, true);
+                    }
+                    h = false;
+                    break;
+            }
+        }
+    }
+}
+
+void insert(int val, Node* root){
+    bool h;
+    insertHelp(val, root, h);
+}
+
+void balance1(Node* root, bool h){
+    int tempBal1, tempBal2;
+
+    tempBal1 = root->bal;
+    switch(tempBal1){
+        case -1:
+            root->bal = 0;
+            break;
+        case 0:
+            root->bal = 1;
+            h = false;
+            break;
+        case 1:
+            tempBal2 = root->r->bal;
+            if (tempBal2 >= 0){
+                RRturn(root, false);
+            }else{
+                RLturn(root, false);
+            }
+            if (tempBal2 == 0){
+                h = false;
+            }
+            break;
+    }
+}
+
+void balance2(Node* root, bool h){
+    int tempBal1, tempBal2;
+
+    tempBal1 = root->bal;
+    switch(tempBal1){
+        case 1:
+            root->bal = 0;
+            break;
+        case 0:
+            root->bal = -1;
+            h = false;
+            break;
+        case -1:
+            tempBal2 = root->l->bal;
+            if (tempBal2 <= 0){
+                LLturn(root, false);
+            }else{
+                LRturn(root, false);
+            }
+            if (tempBal2 == 0){
+                h = false;
+            }
+            break;
+    }
+}
+
 #endif AVL_TREE_H
